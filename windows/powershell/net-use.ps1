@@ -7,9 +7,14 @@ echo "out = $out"
 $oneLiner = $out -replace '[\r\n]',''
 echo "one liner: $oneLiner"
 
-# Capture digits only into errCode variable. MAke sure that the previous variable is qouted 
+# Capture digits only into errCode variable. Make sure that the previous variable is qouted 
 # so that it remains as a single line.
-$errCode = "$oneLiner" -replace '^(.*?)(?<errCode>\d+)(.*)$','${errCode}'
+if ("$oneLiner" -match '^(.*?)(?<errCode>\d+)(.*)$'){
+	$errCode = [int]$($matches['errCode'])
+} else {
+	# In case there was no error - 'matches' will retrun False.
+	$errCode = 0;
+}
 echo "errCode = '$errCode'"
 
 function Error($errCode){
@@ -20,7 +25,6 @@ function Success(){
 	exit 0;
 }
 
-$errCode = [int]$errCode
 # Lets give wrong error code on purpose - in real life we could always change it back to 67
 if ($errCode -eq 670) {
 	Success;
