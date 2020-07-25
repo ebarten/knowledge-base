@@ -12,3 +12,4 @@ System error 67 has occurred.
 The network name cannot be found.
 ```
 We would like to catch the 67 error code so that we could handle it.
+Have a look at net-use.ps1 script in the current folder. It includes execution instructions as well as explaination and excpected output.
